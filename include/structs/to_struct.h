@@ -1,3 +1,4 @@
+/*
 MIT License
 
 Copyright (c) 2021 Patrick Lavoie
@@ -19,3 +20,20 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+*/
+
+#pragma once
+
+#include <tuple>
+#include <utility>
+
+namespace structs
+{
+template< typename S, typename Tup >
+S to_struct( Tup&& tup )
+{
+	return std::apply( []( auto&&... v ) { return S { decltype( v )( v )... }; },
+					   std::forward< Tup >( tup ) );
+}
+
+}  // namespace structs
